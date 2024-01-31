@@ -106,7 +106,48 @@
         damage: 200,
         alive: true,
       };
+      let arr = ["healer", "archer", "warrior"];
 
+function heroAttack(hero) {
+  let dragonAttackIndex;
+  do {
+    dragonAttackIndex = Math.floor(Math.random() * 3);
+  } while (!heroesArray[dragonAttackIndex].alive);
+
+  alert(
+    `${hero.name} har gjort ${hero.damage} skade på ${dragonObject.name}!`
+  );
+
+  dragonObject.currentHP -= hero.damage;
+
+  alert(
+    `${dragonObject.name} har angreppet ${heroesArray[dragonAttackIndex].name} og skadet ${dragonObject.damage}!`
+  );
+
+  heroesArray[dragonAttackIndex].currentHP -= dragonObject.damage;
+
+  if (heroesArray[dragonAttackIndex].currentHP <= 0) {
+    heroesArray[dragonAttackIndex].alive = false;
+
+    document.querySelector(`.${arr[dragonAttackIndex].toLowerCase()}`)
+      .remove();
+  }
+
+  if (heroesArray.every((hero) => !hero.alive)) {
+    alert(`Spillet er tapt! ${dragonObject.name} har vunnet!`);
+
+    document.querySelectorAll(".img-container")
+      .forEach((container) => container.remove());
+  }
+
+  if (dragonObject.currentHP <= 0) {
+    alert("Gratulerer, du har vunnet spillet!");
+
+    document.querySelector(".dragon-container").remove();
+  }
+
+  updateLifebars();
+}
     </script>
   </body>
 </html>
