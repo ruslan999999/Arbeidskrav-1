@@ -148,6 +148,41 @@ function heroAttack(hero) {
 
   updateLifebars();
 }
+function updateLifebars() {
+     
+     heroesArray.forEach((hero, i) => {
+    
+       const healthText = document.getElementById(`${arr[i].toLowerCase()}-health-txt`);
+       healthText.textContent = `${hero.currentHP >= 0 ? hero.currentHP : 0} / ${hero.maxHP} HP`;
+   
+       const lifebar = document.querySelector(`.${arr[i].toLowerCase()}-health`);
+       if (hero.currentHP <= 0) {
+         lifebar.style.width = '0px';
+         return;
+       }
+       const percentage = (hero.currentHP / hero.maxHP) * 100;
+
+       lifebar.style.width = `${(300 * percentage) / 100}px`;
+     });
+
+     const dragonHealthText = document.querySelector('.dragon-health-txt');
+     dragonHealthText.textContent = `${dragonObject.currentHP >= 0 ? dragonObject.currentHP : 0} / ${dragonObject.maxHP} HP`;
+
+     const dragonLifebar = document.querySelector('.dragon-health');
+     if (dragonObject.currentHP <= 0) {
+   dragonLifebar.style.width = '0px';
+   return;
+ }
+
+     const dragonPercentage = (dragonObject.currentHP / dragonObject.maxHP) * 100;
+     dragonLifebar.style.width = `${(300 * dragonPercentage) / 100}px`;
+   }
+
+  
+   document.querySelector('.healer').addEventListener('click', () => heroAttack(heroesArray[0]));
+   document.querySelector('.archer').addEventListener('click', () => heroAttack(heroesArray[1]));
+   document.querySelector('.warrior').addEventListener('click', () => heroAttack(heroesArray[2]));
+   
     </script>
   </body>
 </html>
